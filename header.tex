@@ -1,0 +1,360 @@
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%\\
+%===Editorial===
+
+
+%Camera version variable, if not camera version, comment the line
+%\def\camera{}
+
+\newcommand{\fitpage}[1]{
+	\resizebox{\textwidth}{!}{\ensuremath{#1}}
+}
+
+%=====Arrows=====
+\newcommand{\verylongleftarrow}[1]{
+	\setlength{\unitlength}{.01in}
+	\begin{picture}(#1,1) \put(#1,0){\vector(-1,0){#1}} \end{picture}
+}
+
+\newcommand{\verylongrightarrow}[1]{
+	\setlength{\unitlength}{.01in}
+	\begin{picture}(#1,1) \put(0,0){\vector(1,0){#1}} \end{picture}
+}
+
+\newcommand{\leftgoing}[1]{{\stackrel{{\displaystyle #1}} {\verylongleftarrow{85}}}}
+\newcommand{\rightgoing}[2]{{\stackrel{{\displaystyle #1}} {\verylongrightarrow{85}}}}
+%\newcommand{\fitpage}[1]{\resizebox{\textwidth}{!}{\ensuremath{#1}}}
+%===Notation===
+\newcommand{\ulp}{\mathsf{ulp}}
+\newcommand{\arp}{\mathsf{arp}}
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
+\newcommand{\gsign}{\mathsf{GSign}}
+\newcommand{\gverify}{\mathsf{GVerify}}
+\newcommand{\gsdec}{\mathsf{GSdec}}
+\newcommand{\gmsk}{\mathsf{gmsk}}
+\newcommand{\pid}{\mathfrak{p}}
+\newcommand{\secpam}{\mathsf{N}}
+\newcommand{\garb}{\mathsf{garb}}
+\newcommand{\msis}{\mathsf{MSIS}}
+\newcommand{\mlwe}{\mathsf{MLWE}}
+\newcommand{\ro}{\mathsf{H}}
+\newcommand{\ntru}{\mathsf{NTRU}}
+\newcommand{\bphi}{\boldsymbol{\phi}}
+\newcommand{\balpha}{\boldsymbol{\alpha}}
+\newcommand{\bgamma}{\boldsymbol{\gamma}}
+\newcommand{\nbofeqs}{\rho}
+\newcommand{\nbofeqsapprox}{\upsilon_d}
+\newcommand{\nbofeqsexact}{\upsilon_e}
+\newcommand{\nbofeqseval}{\rho_\mathsf{eval}}
+\newcommand{\tr}{\mathsf{Tr}}
+\newcommand{\inprodfunction}{\mathsf{T}}
+\newcommand{\trace}{\mathrm{Tr}}
+\newcommand{\Span}{\mathrm{Span}}
+\newcommand{\embed}{\varphi}
+\newcommand{\coeffembed}{\mathsf{vec}}
+\newcommand{\rank}{\mathsf{rank}}
+\newcommand{\ringbasis}{\mathsf{Ring}\text{-}\mathsf{BASIS}}
+\newcommand{\basis}{\textsf{BASIS}}
+\newcommand{\prisis}{\textsf{PRISIS}}
+\newcommand{\powerBasis}{\mathsf{PowerBASIS}}
+\newcommand{\GL}{\mathsf{GL}}
+\newcommand{\samp}{\mathsf{Samp}}
+\newcommand{\aux}{\mathsf{aux}}
+\renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}\xspace}
+\newcommand{\vecalpha}{\bm{\alpha}}
+\newcommand{\vecnu}{\bm{\nu}}
+\newcommand{\vecgamma}{\bm{\gamma}}
+\providecommand{\mat}[1]{\ensuremath{\vec{#1}}\xspace}
+\providecommand{\ring}[0]{\ensuremath{\mathcal{R}}\xspace}
+
+\newenvironment{theo}[1][]{%
+\stepcounter{theo}%
+\ifstrempty{#1}%
+ {\mdfsetup{%
+   frametitle={%
+    \tikz[baseline=(current bounding box.east),outer sep=0pt]
+    \node[anchor=east,rectangle,fill=blue!20]
+         {\strut Construction~\thetheo};}}
+ }%
+{\mdfsetup{%
+  frametitle={%
+   \tikz[baseline=(current bounding box.east),outer sep=0pt]
+   \node[anchor=east,rectangle,fill=blue!20]
+        {\strut ~#1};}}%
+ }%
+\mdfsetup{innertopmargin=10pt,linecolor=blue!20,%
+       linewidth=2pt,topline=true,
+       frametitleaboveskip=\dimexpr-\ht\strutbox\relax,}
+   \begin{mdframed}[]\relax%
+}
+{\end{mdframed}}
+
+%%%%%%%%%%%%%%%%%%%%
+% Macro generation %
+%%%%%%%%%%%%%%%%%%%%
+\usepackage{etoolbox}
+\def\do#1{\csdef{b#1}{\ensuremath{\mathbb{#1}}}}
+\docsvlist{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}
+
+\def\do#1{\csdef{c#1}{\ensuremath{\mathcal{#1}}}}
+\docsvlist{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}
+
+\def\do#1{\csdef{s#1}{\ensuremath{\mathsf{#1}}}}
+\docsvlist{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}
+
+\def\do#1{\csdef{mat#1}{\ensuremath{\mathbf{#1}}}}
+\docsvlist{A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z}
+
+\def\do#1{\csdef{vec#1}{\ensuremath{\mathbf{#1}}}}
+\docsvlist{a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,sk,pk}
+
+
+%===Adversaries
+\newcommand{\Adversary}{\mathcal{A}}
+\newcommand{\AltAdversary}{\mathcal{B}}
+
+
+%Relations
+\newcommand{\recRelation}{\mathsf{R}}
+\newcommand{\Index}{\mathbbm{i}}
+\newcommand{\Instance}{\mathbbm{x}}
+\newcommand{\Witness}{\mathbbm{w}}
+
+\newcommand{\FirstRound}{\mathbbm{a}}
+\newcommand{\SecondRound}{\mathbbm{c}}
+\newcommand{\ThirdRound}{\mathbbm{z}}
+
+%Pseudocode
+\makeatletter
+\newcommand{\algrule}[1][.2pt]{\par\vskip.5\baselineskip\hrule height #1\par\vskip.5\baselineskip}
+\makeatother
+\newcommand{\true}{\textbf{true}}
+\newcommand{\false}{\textbf{false}}
+\newcommand{\abort}{\textbf{abort}}
+\newcommand{\gcom}[1]{\hfill $\sslash$#1}
+\newcommand{\bool}[1]{\llbracket #1 \rrbracket}
+\newcommand{\getsunif}{\overset{\$}{\leftarrow}}
+\newcommand{\SecParam}{\lambda}
+
+%===Matrix Commitment
+\newcommand{\q}{{\tilde{q}}}
+\newcommand{\matrixsetup}{\mathsf{MSetup}}
+\newcommand{\matrixcrs}{\mathsf{crs}}
+\newcommand{\matrixcommit}{\mathsf{MCommit}}
+\newcommand{\matrixstate}{\mathsf{st}}
+\newcommand{\matrixeval}{\mathsf{MEval}}
+\newcommand{\matrixverify}{\mathsf{MVerify}}
+
+
+%===Many-to-one commitment
+\newcommand{\commitment}{\mathsf{MtO}}
+\newcommand{\setup}{\mathsf{Setup}}
+\newcommand{\commit}{\mathsf{Commit}}
+%\newcommand{\keygen}{\mathsf{KeyGen}}
+\newcommand{\open}{\mathsf{Open}}
+\newcommand{\recopen}{\mathsf{LevOpen}}
+\newcommand{\arity}{\kappa}
+\newcommand{\BindingSet}{\mathcal{X}}
+\newcommand{\OpenSpace}{\Space_O}
+\newcommand{\OpenValidSpace}{\Space_V}
+\newcommand{\OpenHonestSpace}{\Space_H}
+\newcommand{\Space}{\mathcal{S}}
+\newcommand{\BindMessSpace}{\mathcal{S}}
+\newcommand{\comkey}{\mathsf{ck}}
+\newcommand{\slack}{\omega}
+
+\newcommand{\Message}{\mathsf{m}}
+\newcommand{\Opening}{\mathsf{o}}
+\newcommand{\veclength}{\ell}
+\newcommand{\Decompose}{\mathsf{Decompose}}
+\newcommand{\ann}{\text{Ann}}
+
+\newcommand{\idx}{\veci}
+\newcommand{\MessSpace}{\Space_M}
+\newcommand{\PublicParam}{\mathsf{pp}}
+%===Vector Commitment
+\newcommand{\veccom}{\mathsf{VC}}
+\newcommand{\veccomsetup}{\mathsf{Setup}}
+\newcommand{\veccomcommit}{\mathsf{Com}}
+\newcommand{\veccomstate}{\mathsf{st}}
+\newcommand{\veccomopen}{\mathsf{Open}}
+\newcommand{\veccomcheck}{\mathsf{Check}}
+
+%===Polynomial Commitment
+\newcommand{\commitmentScheme}{\mathsf{CM}}
+\newcommand{\polysetup}{\mathsf{Setup}}
+\newcommand{\polycrs}{\mathsf{crs}}
+\newcommand{\polyproof}{\pi}
+\newcommand{\polycommit}{\mathsf{Commit}}
+\newcommand{\polystate}{\mathsf{st}}
+\newcommand{\polyeval}{\mathsf{Eval}}
+\newcommand{\polyverify}{\mathsf{Verify}}
+\newcommand{\polyopen}{\mathsf{Open}}
+\newcommand{\polyaggregate}{\mathsf{Aggregate}}
+\newcommand{\polyaggverify}{\mathsf{AggVerify}}
+\newcommand{\polyProver}{\prov}
+\newcommand{\polyVerifier}{\ver}
+\newcommand{\polyExtractor}{\mathcal{E}}
+\newcommand{\polyChallengeSpace}{\mathcal{C}}
+
+\newcommand{\polydegree}{d}
+\newcommand{\crs}{\mathsf{crs}}
+\newcommand{\varx}{\mathsf{X}}
+\newcommand{\vary}{\mathsf{Y}}
+\newcommand{\vari}{\mathsf{I}}
+\newcommand{\varj}{\mathsf{J}}
+\newcommand{\even}{\mathsf{even}}
+\newcommand{\odd}{\mathsf{odd}}
+\newcommand{\HammingWt}{\operatorname{w}}
+%==Trapdoor Sampling
+\newcommand{\trapgen}{\mathsf{TrapGen}}
+\newcommand{\genlin}{\mathsf{GL}}
+\newcommand{\samplepre}{\mathsf{SamplePre}}
+%===Sets and Spaces===
+\newcommand{\NumberField}{\mathcal{K}}
+\newcommand{\NumberFieldR}{\NumberField_{\RR}}
+\newcommand{\Zqt}{\Z_{q^\tau}}
+\newcommand{\Fqdl}{\mathbb{F}_{q^{d/l}}}
+\newcommand{\Mq}{\mathcal{M}_q}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\Rq}{\R_q}
+\newcommand{\Rp}{\R_p}
+\newcommand{\mbin}{m_{\text{bin}}}
+\newcommand{\bit}{\{0,1\}}
+\newcommand{\Lattice}{\Lambda}
+\newcommand{\genLattice}{\mathcal{L}}
+\newcommand{\coeff}{\mathsf{coeff}}
+\newcommand{\discGauss}{\mathcal{D}}
+\newcommand{\smoothing}{\eta}
+\newcommand{\minDistance}{\lambda}
+\newcommand{\ringInteger}{\mathcal{O}}
+\newcommand{\integer}{\mathsf{int}}
+%===Matrix===
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother
+\newcommand{\veczero}{\mathbf{0}}
+\newcommand{\matzero}{\mathbf{0}}
+\newcommand{\matpi}{\mathbf{\Pi}}
+
+
+
+%===Norms===
+\newcommand{\twonorm}[1]{\left\lVert{#1}\right\rVert_2}
+\newcommand{\infnorm}[1]{\left\lVert{#1}\right\rVert_\infty}
+
+%===Lattices===
+\newcommand{\polvec}[1]{\bm{#1}}
+\newcommand{\hatpol}[1]{\hat{\pol{#1}}}
+\newcommand{\ntt}[1]{\mathsf{NTT}\left({#1}\right)}
+\newcommand{\nttinv}[1]{\mathsf{NTT}^{-1}\left({#1}\right)}
+\newcommand{\aut}{\mathsf{Aut}(\R_q)}
+\newcommand{\rot}{\mathsf{rot}}
+\newcommand{\inprod}[2]{\langle #1 , #2 \rangle}
+\newcommand{\fc}[1]{\widetilde{#1}}
+\newcommand{\Degree}{d}
+\newcommand{\NTRUTrapGen}{\mathsf{NTRU.TrapGen}}
+\newcommand{\NTRUbasis}{\matT_\ntru}
+\newcommand{\GaussianSampler}{\mathsf{NTRU.SamplePre}}
+%===Zero Knowledge===
+\newcommand{\prov}{\mathcal{P}}
+\newcommand{\ver}{\mathcal{V}}
+\newcommand{\simul}{\mathcal{S}}
+\newcommand{\user}{\mathcal{U}}
+\newcommand{\Proof}{\pi}
+\newcommand{\Extractor}{\polyExtractor}
+
+\newcommand{\rej}[1]{\mathsf{Rej}\left({#1}\right)}
+\newcommand{\chal}{\mathcal{C}}
+\newcommand{\eqtest}{\overset{?}{=}}
+
+\newcommand{\uu}{\mathsf{u}}
+\newcommand{\ww}{\mathsf{w}}
+
+
+\newcommand{\monomials}{\mathcal{X}}
+
+%===Commitments===
+\newcommand{\com}{\mathsf{Com}}
+\newcommand{\keygen}{\mathsf{KeyGen}}
+\newcommand{\abdlop}{\mathsf{ABDLOP}}
+\newcommand{\extra}{\mathsf{ext}}
+\newcommand{\transcript}{\mathsf{tr}}
+
+\newcommand{\commitmentSpace}{\mathcal{M}}
+\newcommand{\slackSpace}{\mathcal{S}}
+\newcommand{\commitmentState}{\mathsf{st}}
+
+%===Probabilities and Randomness===
+%\newcommand{\rand}{\overset{\$}{\gets}}
+\newcommand{\rand}{\gets}
+\newcommand{\Prob}[1]{\Pr\left\lbrack{#1}\right\rbrack}
+\newcommand{\CProb}[2]{\Pr\left\lbrack{#1}\,\middle|\,{#2}\right\rbrack} 
+\newcommand{\stdev}{\mathfrak{s}}
+\newcommand{\rnddist}{\chi}
+\newcommand{\seed}{\mathsf{seed}}
+
+%Payment System
+\newcommand{\act}{\mathsf{act}}
+\newcommand{\sn}{\mathsf{sn}}
+\newcommand{\coin}{\mathsf{cn}}
+\newcommand{\cnk}{\mathsf{cnk}}
+\newcommand{\amt}{\mathsf{amt}}
+
+\newcommand{\unum}[1]{^{\,(#1)}}
+
+\newcommand{\SN}{\mathsf{SN}}
+\newcommand{\ask}{\mathsf{ask}}
+\newcommand{\ck}{\mathsf{ck}}
+
+
+%sizes
+\newcommand{\benchmarksize}{14.4}
+\newcommand{\verencsize}{19.0}
+\newcommand{\groupsigsize}{92}
+\newcommand{\ciphertextsize}{1}
+
+\newcommand{\raapprox}{16}
+\newcommand{\rbapprox}{19}
+\newcommand{\rcapprox}{20}
+\newcommand{\rdapprox}{22}
+
+%mults
+\newcommand{\multZ}{\otimes}
+\newcommand{\multR}{\underset{R}{\otimes}}
+\newcommand{\multS}{\underset{S}{\otimes}}
+\newcommand{\multSk}{\underset{S^k}{\otimes}}
+
+\newcommand{\optcol}{black} %color for optional things in the protocol
+\newcommand{\binone}{\bin{1}}
+\newcommand{\bintwo}{\bin{2}}
+
+\newcommand{\bvec}[1]{\bar{\bm #1}}
+\newcommand{\bvecs}{\bar{\vecs}}
+\newcommand{\bchal}{\bar{\chal}}
+
+%
+\newcommand{\bits}{\{0,1\}}
+\newcommand{\frakd}{\mathfrak{d}}
+\newcommand{\frakl}{\mathfrak{l}}
+\newcommand{\diffIndex}{j}
+
+%
+% commands for proof sizes
+\newcommand{\singlemonomialproof}{349.32}
+\newcommand{\singlelargesetproof}{6.47}
+\newcommand{\ACLMTimprovement}{10}
+\newcommand{\NSimprovement}{NA}
+\newcommand{\marlinsizes}{NA}
+\newcommand{\marlinlargesetsmall}{14.66}
+\newcommand{\marlinlargesetbig}{42.66}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
+

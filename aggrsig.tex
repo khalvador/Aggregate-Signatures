@@ -1,0 +1,652 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FLAGS
+%
+\newif\iffull
+%\fulltrue
+\fullfalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iffull
+\documentclass[11pt,letterpaper]{article}
+%\usepackage[notes=true,later=true]{dtrt}
+\usepackage{fullpage}
+\else
+%\documentclass[orivec,envcountsect,envcountsame]{llncs}
+\documentclass[orivec,envcountsect,envcountsame,11pt]{llncs}
+\usepackage[notes=xxx,llncssubsub]{dtrt}
+\usepackage{fullpage}
+\pagestyle{plain} 
+\fi
+
+\iffull
+\usepackage[backend=bibtex8,style=alphabetic,maxnames=8,maxalphanames=6,sorting=anyt]{biblatex}
+% https://cryptobib.di.ens.fr/
+\bibliography{local.bib,abbrev3.bib,crypto_crossref.bib,}
+\else
+\usepackage[
+style=alphabetic,
+firstinits,
+backend=bibtex,
+maxalphanames=4,
+minalphanames=3,
+maxbibnames=15,
+]{biblatex}
+
+
+% \DeclareNameFormat{}{\usebibmacro{name:first-last}{}{#5}{#1}{#7}\usebibmacro{name:andothers}}
+%\DeclareFieldFormat[misc]{title}{\mkbibquote{#1\MLInpSizdot}}
+\bibliography{references}
+\fi
+\renewcommand*{\bibfont}{\small}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PACKAGES
+\iffull
+\usepackage{amsthm}
+\else
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\fi
+\usepackage{amssymb,amsfonts,amsmath}
+\usepackage{bbm}
+%\usepackage{times}
+\usepackage{microtype}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes,arrows}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{latexsym}
+\usepackage{paralist}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+\usepackage[capitalise]{cleveref}
+\crefname{step}{Step}{Steps}
+\usepackage{caption}
+\usepackage{dsfont}
+\usepackage{url}
+\usepackage{braket}
+\usepackage{mathrsfs}
+\usepackage{color}
+\usepackage{soul}
+\usepackage{mdframed}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{setspace}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xspace}
+\usepackage{graphics}
+\usepackage[notions,operators,sets,keys,ff,adversary,primitives,complexity,asymptotics,lambda,landau,advantage]{cryptocode}
+\iffull
+\usepackage[margin=4mm,small,labelfont=bf]{caption}
+\fi
+%% the following is commaon for all examples in mdframed manual
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+%%% upto here
+\newcounter{theo}[section]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREM ENVIRONMENTS
+\newtheorem{idefinition}{Definition}%[section]
+\newtheorem{itheorem}{Theorem}%[section]
+\newtheorem{icorollary}{Corollary}%[section]
+\newtheorem{ilemma}{Lemma}%[section]
+\iffull
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{question}[theorem]{Question}
+\fi
+
+\theoremstyle{definition} % non-italics
+\iffull
+\newtheorem{example}{Example}
+\newtheorem{remark}[theorem]{Remark}
+\fi
+\newtheorem{protocol}[theorem]{Protocol}
+\newtheorem{construction}[theorem]{Construction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTES
+\newcommand{\ale}[1]{\dtcolornote[Ale]{red}{#1}}
+\newcommand{\giacomo}[1]{\dtcolornote[Giacomo]{blue}{#1}}
+\newcommand{\khanh}[1]{\dtcolornote[Khanh]{magenta}{#1}}
+\newcommand{\martin}[1]{\dtcolornote[Martin]{purple}{#1}}
+\newcommand{\sasha}[1]{\dtcolornote[Sasha]{orange}{#1}}
+
+\newcommand{\BCGdiff}[1]{\textcolor{blue}{#1}}
+\newcommand{\DEdiff}[1]{\color{blue}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FORMATTING
+\allowdisplaybreaks
+\newcommand{\FormatAuthor}[3]{
+	\begin{tabular}{c}
+		#1 \\ {\small\texttt{#2}} \\ {\small #3}
+	\end{tabular}
+}
+\newcommand{\doclearpage}{%
+	\iffull
+	\clearpage
+	\fi
+}
+\newcommand{\DoQuote}[1]{``#1''}
+\newcommand{\defemph}[1]{\textbf{\emph{#1}}}
+\newcommand{\keywords}[1]{\bigskip\par\noindent{\footnotesize\textbf{Keywords\/}: #1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% tikz
+
+% Define block styles
+\tikzstyle{source} = [rectangle, draw, fill=gray!20, 
+text width=10em, text centered, minimum height=8em]
+
+\tikzstyle{protocol} = [rectangle, draw, fill=white!20, 
+text width=10em, text centered, minimum height=8em]
+
+\tikzstyle{transformation} = [rectangle, draw, fill=white!20, 
+text width=8em, text centered, rounded corners, minimum height=6em]
+
+\tikzstyle{line} = [draw, -latex']
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MACROS
+\include{header}
+\newcommand{\from}{\gets}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\title{
+		More Efficient Aggregation of Falcon Signatures
+	}
+	%
+	\author{
+		\begin{tabular}[h!]{ccc}
+		%	\FormatAuthor{Martin Albrecht}{martin.albrecht@kcl.ac.uk}{King's College London}
+		%	\FormatAuthor{Alessandro Chiesa}{alessandro.chiesa@epfl.ch}{EPFL}
+		%	\FormatAuthor{Giacomo Fenzi}{giacomo.fenzi@epfl.ch}{EPFL} 
+		%	\FormatAuthor{Sasha Lapiha}{sasha.lapiha.2021@live.rhul.ac.uk}{Royal Holloway, University of London}
+			\FormatAuthor{Ngoc Khanh Nguyen}{khanh.nguyen@epfl.ch}{EPFL}
+		\end{tabular}
+	}
+    \institute{}
+%	\date{\today}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\maketitle
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{abstract}
+	
+	\end{abstract}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	\iffull
+	\thispagestyle{empty}
+	\clearpage
+	\setcounter{tocdepth}{2}
+	\begin{spacing}{0.95}
+		{\small\tableofcontents}
+	\end{spacing}
+	\thispagestyle{empty}
+	\clearpage
+	\setcounter{page}{1}
+	\else
+	%\setcounter{tocdepth}{1}
+	%\begingroup
+	%\let\clearpage\relax
+	%\vspace{-1.8cm}
+	%{\small\tableofcontents}
+	%\endgroup
+	\fi
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\doclearpage
+	\section{Introduction}
+	\label{sec:introduction}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\subsection{Our results}
+	\label{sec:our-results}
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\subsection{Related works}
+	\label{sec:related-works}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\subsubsection{A subsubsection}
+	
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\doclearpage
+	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\doclearpage
+
+\section{Preliminaries}\label{sec:prelims}
+\paragraph{Notation.} We denote the security parameter by $\SecParam$, which is implicitly given to all algorithms unless specified otherwise. Further, we write $\negl$ (resp. $\poly$) to denote an unspecified negligible function (resp. polynomial) in $\SecParam$. In this work, we implicitly assume that the vast majority of the key parameters, e.g. the ring dimension, and the dimensions of matrices and vectors, are $\poly$. However, the modulus used in this work may be super-polynomial in $\SecParam$.
+
+For $a, b \in \NN$ with $a < b$, write $[a, b] \coloneqq \{ a, a+1, \dots, b \}, [a] \coloneqq [1, a]$.
+For $q \in \NN$ write $\ZZ_q$ for the integers modulo $q$.
+We denote vectors with lowercase boldface (i.e. $\vecu, \vecv$) and matrices with uppercase boldface (i.e. $\matA, \matB$). For a vector $\vecx$ of length $n$, we write $x_i$ or $\vecx[i]$ for its $i$-th entry. Similarly, we define $\vecx_i := (x_1,\ldots,x_i)$ for $i\in [n]$. Given two vectors $\vecu,\vecv$, we denote by $(\vecu,\vecv)$ its concatenation. Also, $\varepsilon$ is an empty string.
+
+\paragraph{Bits-to-integer conversion.} Let $k \geq 1$. For a vector $\vecb \in \ZZ^k_2$, we define the bits-to-integer conversion function $\integer(\vecb) := \sum^k_{i=1} b_i2^{i-1} \in [0,2^k-1]$. Clearly, if $\vecu \in \ZZ^k_2$ and $\vecv \in \ZZ^{l}_2$ then $\integer((\vecu,\vecv)) = \integer(\vecu) + 2^k\integer(\vecv)$.
+
+\paragraph{Norms.}
+We define the $\ell_p$ norm on $\CC^n$ as $\norm{\vecx}_p = \left(\sum_i |x_i|^p\right)^{1/p}$ for $p < \infty$ and $\infnorm{\vecx} \coloneqq \max_i |x_i|$. Unless otherwise specified, we use $\norm{\cdot}$ for the $\ell_2$ norm. We let the norm of a matrix be defined as the norm taken over the concatenation of columns of the matrix.
+
+\paragraph{Lattices.} A subset $\Lattice \subseteq \RR^m$ is a lattice if: (i) $\veczero \in \Lattice$, and for $\vecx, \vecy \in \Lattice$, $\vecx + \vecy \in \Lattice$, and (ii) for every $\vecx \in \Lattice$, there exists $\epsilon > 0$ such that $\{ \vecy \in \RR^m : \norm{\vecx - \vecy} < \epsilon \} \cap \Lattice = \{ \vecx \}$.
+We say $\matB \in \RR^{m \times k}$ is a basis for $\Lattice$ if its columns are linearly independent and $\Lattice = \genLattice(\matB) \coloneqq \{ \matB \vecz : \vecz \in \ZZ^k \}$. The span (as a vector space) of the basis of a lattice is the span of a lattice denoted as $\Span(\Lattice)$.
+We also let $\Lattice^*$ be the dual lattice defined as $\Lattice^* = \{ \vecw \in \Span(\Lattice) :  \langle \Lattice, \vecw \rangle \subseteq \ZZ \}$.
+We denote by $\tilde{\matB}$ the Gram-Schmidt orthonormalization of $\matB$. The Gram-Schmidt norm of $\matB$ is defined as $
+ \|\tilde{\matB} \| \coloneqq  \max_{i \in [k]} \| \tilde{\vecb}_i\| $
+where $\tilde{\vecb}_i$ is the $i$-th column of $\tilde{\matB}$.
+
+\subsection{Power-of-Two Cyclotomic Rings}\label{subsec:cyclrings}
+Let $N$ be a power-of-two and $\NumberField = \mathbb{Q}[X]/(X^N+1)$ be the $2N$-th cyclotomic field. Denote $\R =\ZZ[X]/(X^{N}+1)$ to be the ring of integers of $\NumberField$. For an odd prime $q$, we write $\Rq := \R/(q)$. We denote $\Rq^\times$ to be the set of invertible elements in $\Rq$. In this work, we pick $q \equiv 5 \pmod{8}$. Hence, we can  write 
+\[X^N + 1 \equiv (X^{N/2}-r)(X^{N/2}+r) \pmod{q}\]
+for a primitive $4^{\text{th}}$ root of unity $r \in \ZZ_q$ (i.e. $r^2 = -1$) where polynomials $X^{d/2}\pm r$ are irreducible modulo $q$. 
+
+For $\matA \in \Rq^{n \times m}$, $\vecx \in \Rq^{m}$, we define the $q$-ary lattices (or lattice cosets) as  $\Lattice_\vecu^\perp(\matA) \coloneqq \{ \vecz \in \R^m : \matA \vecz = \vecu \bmod q \}$. We omit the subscript $\vecu$ if $\vecu = \veczero$. 
+
+\paragraph{Invertibility results.} In this work, we consider a particular automorphism $\sigma : \R \rightarrow \R$ defined as $X \mapsto X^{-1}$. In the following, we prove that for any non-zero $c \in \Rq$, at least one of $c$ or $c + \sigma(c)$ is invertible over $\Rq$.
+
+\begin{lemma}
+Let $q \equiv 5 \pmod{8}$ and $c$ be a non-zero element of $\Rq$. Then, $\{c,c+\sigma(c)\} \cap \Rq^\times \neq \emptyset$.   
+\end{lemma}
+\begin{proof}
+ First, note that $c+\sigma(c)$ is stable under $\sigma$. Hence, if $c+\sigma(c) \neq 0$ then by \cite[Lemma 2.6]{DBLP:conf/crypto/LyubashevskyNP22}, we get $c+ \sigma(c) \in \Rq^\times$. What we have left is the case $c + \sigma(c) = 0$. We prove that if $c \neq 0$ then $c$ must be invertible over $\Rq$.
+
+ We follow the methodology from \cite[Lemma 2.6]{DBLP:conf/crypto/LyubashevskyNP22}. Let $c = \sum^{N-1}_{i=0} c_i X^i$. Then, $c + \sigma(c) = 0$ implies that
+ \[ c = c_1X + c_2X^2 + \ldots + c_{N/2}X^{N/2} + c_{N/2-1}X^{N/2+1} + \ldots + c_1X^{N-1}.\]
+ Now, note that
+\[c \bmod (q,X^{N/2}\pm r) = \sum^{N/2-1}_{i=1} (c_i \mp rc_{N/2-i})X^i \mp rc_{N/2}.\]
+Suppose $c \neq 0$. Then, one of the coefficients $c_1,\ldots,c_{N/2} \in \ZZ_q$ is non-zero, say $c_i$. First, if $i = N/2$ then the statement trivially holds. Now, assume $i \neq N/2$. We claim that for any sign $b\in \{-1,1\}$, either $c_i  - brc_{N/2-i}$ or $c_{N/2-i} - brc_{i}$ is not zero. Indeed, assume both of them were equal to zero, that is $c_i =  brc_{N/2-i}$ and $c_{N/2-i} = brc_{i}$ for $b \in \{-1,1\}$. Then $c_i = b rc_{N/2-i} = b^2r^2c_i =r^2c_i =  -c_i $ which is a contradiction since $c_i \neq 0$. Hence, we deduce that $c \bmod (p,X^{d/2}- r)$ and $c \bmod (p,X^{d/2} + r)$ are non-zero. The statement now follows by the Chinese Remainder Theorem.
+\end{proof}
+%\paragraph{Monomials.} We define $\monomials := \{ X^i : i \in \ZZ\}$ to be the set of monomials in $\R$. We use the result from \cite{DBLP:conf/asiacrypt/BenhamoudaCKLN14} which says that for any two distinct $x,y \in \monomials$, $\| 2/(x-y)\|_\infty = 1$.
+%\paragraph{Short elements are invertible.} For $\kappa >0$, we define $S_\kappa := \{ x \in \Rq: \|x\|_\infty \leq \kappa \}$ to be the set of ring elements in $\Rq$ with infinity norm at most $\kappa$.  We recall the following invertibility result by Lyubashevsky and Seiler \cite{DBLP:conf/eurocrypt/LyubashevskyS18}.
+%\begin{lemma}\label{lem:short-are-invertible}
+% Let $1\leq l<N$ be a power-of-two and suppose $q \equiv 2N/l + 1 \pmod{4N/l}$. Then, every non-zero element in $S_\kappa$ is invertible over $\Rq$ as long as  $\kappa <\sqrt{l/N} \cdot q^{l/N}$.   
+%\end{lemma}
+
+\paragraph{Discrete Gaussian Distributions.} Let $\sigma > 0$ be a parameter and $\Lattice$ be a $m$-dimensional lattice. We then define the discrete Gaussian distribution $\discGauss_{\sigma, \vecc, \Lattice}$ over a lattice coset $\vecc + \Lattice$ as follows.
+\begin{equation*}
+  \rho_{\sigma, \vecc}(\vecz) \coloneqq \exp\left( - \frac{\pi \norm{\vecz - \vecc}^2}{\sigma^2} \right) \text{ and } \discGauss_{\sigma, \vecc, \Lattice}(\vecz) \coloneqq \frac{\rho_{\sigma, \vecc}(\vecz)}{\sum_{\vecx \in \Lattice} \rho_{\sigma, \vecc}(\vecx)}
+\end{equation*}
+When $\vecc = \veczero$ or $\Lattice = \ZZ^m$, we will omit it from the notation. We naturally extend this notion for lattices over the ring of integers $\R$, and for matrices by sampling column-wise.
+
+Let $\matA \in \Rq^{n \times m}$ be a matrix over $\Rq$ and take any $\vecu \in \Rq^n$. We write $\vecs \from \matA^{-1}_\sigma (\vecu)$ to denote sampling $\vecs \from \discGauss^{mN}_{\sigma}$ conditioned on $\matA\vecs = \vecu$. 
+
+\paragraph{Smoothing parameter.}
+The smoothing parameter $\smoothing_\epsilon(\Lattice)$ of a lattice is the smallest $s > 0$ such that $\rho_{1/s}(\Lattice^*) \leq 1 + \epsilon$. Below we recall the standard upper-bound on the smoothing parameter \cite{MicciancioR07,DBLP:conf/stoc/GentryPV08}.
+
+\begin{lemma}
+  \label{lemma:smoothing}
+  Let $\Lattice \subseteq \RR^m$ be a lattice, and let $\epsilon > 0$.
+  Then, for every basis $\matB$ of $\Lattice$,
+  \begin{equation*}
+    \smoothing_{\epsilon}(\Lattice) \leq \tilde{\norm{\matB}} \cdot \sqrt{\frac{\ln(2m(1 + 1/\epsilon))}{\pi}} \enspace.
+  \end{equation*}
+\end{lemma}
+
+\paragraph{Rejection sampling.} We recall the generalised version introduced recently by Boschini et al.\ \cite{DBLP:conf/crypto/BoschiniTT22} for discrete Gaussian over arbitrary lattices (here we skip the general case for ellipsoidal Gaussians).
+\begin{figure}[t]
+				\centering
+				\resizebox{\textwidth}{!}{
+				\fbox{
+					\begin{minipage}[t]{0.59\textwidth}
+						\underline{ $\mathsf{RejSamp}$:}
+						\begin{algorithmic}[1]
+							\State $(\vecu,\vecv) \gets h$
+							\State $\vecz \gets \discGauss^{mN}_{\sigma, \vecv+\vecu,\Lattice}$
+							\State $\pcreturn (\vecu, \vecv,\vecz)$ with prob. $\min\left(\frac{ \discGauss^m_{\sigma}(\vecz)}{M \cdot  \discGauss^m_{\sigma, \vecv}(\vecz)},1\right)$
+						\end{algorithmic}
+					\end{minipage}
+					\quad
+					\begin{minipage}[t]{0.4\textwidth}
+						\underline{ $\mathsf{SimRS}$:}
+						\begin{algorithmic}[1]
+							\State $(\vecu,\vecv) \gets h$
+							\State $\vecz \gets \discGauss^{mN}_{\sigma,\vecu,\Lattice}$
+							\item $\pcreturn (\vecu, \vecv,\vecz)$ with prob. $\frac{1}{M}$
+						\end{algorithmic}
+					\end{minipage}
+				}}
+				\caption{Rejection sampling \cite{DBLP:conf/crypto/BoschiniTT22}.}
+				\label{fig:rejsamp}
+			\end{figure}
+			%
+\begin{lemma}[Rejection Sampling \cite{DBLP:conf/crypto/BoschiniTT22}]
+	\label{lem:rejsamp}
+	Take any $\alpha, T>0$ and $\varepsilon \leq 1/2$. Let $\Lattice \subseteq \R^m$ be a lattice over $\R$ and $\sigma \geq \max(\alpha T, \smoothing_{\varepsilon}(\Lattice))$ be a parameter. Let $h: \R^m \times \R^m \rightarrow [0,1]$ be a probability distribution which returns $(\vecu,\vecv)$ where the vector $\vecv$ satisfies $\|\vecv\| \leq T$\footnote{One may think of $\vecu$ (resp. $\vecv$) as the public (resp. private) shift.}. Further, define $M \coloneqq  \exp(\frac{\pi}{\alpha^2} + 1)$ and $\epsilon \coloneqq  2\frac{1+\varepsilon}{1-\varepsilon}\exp(-\alpha^2 \cdot \frac{\pi-1}{\pi^2})$. Then, the statistical distance between distributions $\mathsf{RejSamp}$ and $\mathsf{SimRS}$ defined in \Cref{fig:rejsamp} is at most $\frac{\epsilon}{2M} + \frac{2\varepsilon}{M}$. Moreover, the probability that $\mathsf{RejSamp}$ outputs something is at least $\frac{1-\epsilon}{M}\left(1-\frac{4\varepsilon}{(1+\varepsilon)^2}\right)$.
+\end{lemma}
+
+\paragraph{Module-SIS.} We recall the standard Module-SIS \cite{DBLP:journals/dcc/LangloisS15} assumption.
+
+\begin{definition}[Module-SIS]\label{def:msis}
+	 Let $q = q(\secpar)$, $n = n(\secpar)$, $m = m(\secpar)$, $\beta = \beta(\secpar)$ and $N = N(\secpar)$. We say that the $\msis_{n,m,N,q,\beta}$ assumption holds if for any PPT adversary $\adversary{A}$, the following holds:
+	\begin{equation*}
+		\CProb{
+			\begin{array}{c}
+				\matA \vecs = \veczero \land 
+				0 < \norm{\vecx} \leq \beta
+			\end{array}
+		}
+		{ 
+			\begin{array}{c}
+				\matA\from \Rq^{n \times m}\\
+				\vecs \from \adversary{A}(\matA)
+			\end{array}
+		} \leq \negl \enspace.
+	\end{equation*}
+\end{definition}
+\subsection{Trapdoor Sampling}
+
+\paragraph{Gadget matrix.} Let $\delta \geq 2$. We set $\q \coloneqq \lfloor \log_\delta q \rfloor + 1$, and $\vecg^\top = [1, \delta, \dots, \delta^{\q - 1}] \in \R_q^{1 \times \q}$ and $\matG_n \coloneqq \matI_n \otimes \vecg^\top \in \R_q^{n \times n\q}$. When the dimension are clear from context we simply write $\matG$.
+  Write $\matG^{-1}_n: \Rq^{n \times t} \to \Rq^{n\q \times t}$ for the inverse function that takes a matrix of entries in $\Rq$, and  decomposes each entry w.r.t. the base $\delta$.
+  %By construction $\matG_n \cdot \matG^{-1}_n(\matA) = \matA$ for $\matA \in \Rq^{n \times t}$. 
+  We also write $\vecg^{-1}$ for $\matG_1^{-1}$.
+
+Next, we recall the trapdoor generation from \cite{DBLP:conf/eurocrypt/MicciancioP12,FenNgu23}.
+\begin{lemma}[Trapdoor Generation]
+  \label{lemma:genTrapdoor}
+  Let $N,n>0, t = n\q$ and $\matG_n \in \Rq^{n \times t}$ be the gadget matrix. Take $ m \geq t + n + \omega(\log \SecParam)$. Then, there is a PPT algorithm $\trapgen(n, m)$ that with an overwhelming probability returns two matrices $(\matA, \matR) \in \Rq^{n \times m} \times \Rq^{m \times t}$ such that $\matA \matR = \matG_n$ and  $\|\matR\| \leq  \stdev\sqrt{2t(m-t)N}$ where $\stdev > 2N \cdot q^{\frac{n}{m-t} + \frac{2}{N(m-t)}}$. Moreover, $\matA$ is statistically close to a uniformly random matrix in $\Rq^{n \times m}$.
+\end{lemma}
+
+\noindent The next lemma \cite{DBLP:conf/eurocrypt/MicciancioP12} states that given a short $\matG$-trapdoor matrix $\matR$ for $\matA$, one can efficiently sample preimages of $\matA$ according to the discrete Gaussian distribution. We further merge the result with the tail-bound inequality from \cite{MicciancioR07}.
+
+\begin{lemma}[Preimage Sampling]\label{lem:samplepre}
+Let $N,n,m>0$, $t = n\q$ and $k = \max(n,m)$. Then, there exists a PPT algorithm $\samplepre(\matA,\matR,\vecv,\sigma)$ that takes as input a matrix $\matA \in \Rq^{n \times m}$, a $\matG_n$-trapdoor $\matR \in \Rq^{m \times t}$ for $\matA$ with a tag $\matH$, a target vector $\vecv \in \Rq^n$ in the column-span of $\matA$, and a Gaussian parameter $\sigma$, and outputs a vector $\vecs \in \Rq^m$ such that $\matA\vecs=\vecv$. Further, if $\sigma \geq \delta \|\matR\| \cdot \omega(N\sqrt{\log kN})$, then the statistical distance between the following distributions is negligible:
+  \begin{equation*}
+	    \left\{ \vecs \from \samplepre(\matA,\matR,\vecv,\sigma) \right\} \text{ and }
+	    \left\{ \vecs \from \matA^{-1}_\sigma(\vecv)
+	    \right\}
+	  \end{equation*}
+and in particular, $\Pr[\|\vecs\| > \sigma \sqrt{mN} :  \vecs \from \samplepre(\matA,\matR,\vecv,\sigma)]$ is negligible.
+
+We extend this algorithm for matrices, i.e. for a matrix $\matV \in \Rq^{n \times \ell}$ with columns $\vecv_1,\ldots,\vecv_\ell$, we define $\samplepre(\matA,\matR,\matV,\sigma)$ to be the algorithm which returns a matrix $\matS \in \Rq^{m \times \ell}$, where the $i$-th column is the output of $\samplepre(\matA,\matR,\vecv_i,\sigma)$.
+\end{lemma}
+
+
+
+
+
+\subsection{Falcon Signatures}\label{sec:ntru-lattices}
+The NTRU lattice associated to $h \in \Rq$ is defined as
+			\begin{equation*}
+				\Lattice_{h} \coloneqq  \{(u,v) \in \R^2 : u + vh = 0 \bmod q \}
+				\enspace.
+			\end{equation*}
+			%
+%			Then, $\Lattice_{h}$ is a $2N$-dimensional full-rank lattice generated by the rows of \begin{equation*}
+%A_{h,q} \coloneqq  \begin{bmatrix} -\rot(h) & \matI_N \\ q \cdot \matI_N & 0 \end{bmatrix} \in \ZZ^{2N \times 2N} \enspace.
+%\end{equation*}
+			We use the main result of Stehlé  and Steinfeld \cite{DBLP:journals/iacr/StehleS13}, which says that there is an efficient algorithm that outputs $(h,\NTRUbasis)$ such that $h$ is statistically close to a uniform distribution over $\Rq^\times$ and $\NTRUbasis$ is a basis for $\Lattice_{h}$. 
+			%
+			\begin{lemma}[NTRU Trapdoor Generation \cite{DBLP:journals/iacr/StehleS13}]\label{lemma:NTRUTrapGen}
+                Let $q = \omega(N)$ such that $q \equiv 1 \pmod{2N}$. Take $\epsilon \in (0,1/3)$ and $\stdev \geq \max(N\sqrt{\ln(8Nq)}\cdot q^{1/2 + \epsilon}, \omega(N^{3/2}\ln^{3/2}N))$. Then, there is a PPT algorithm $\NTRUTrapGen(q,N,\stdev)$ which with an overwhelming probability outputs $h \in \Rq$ and a basis $\NTRUbasis$ of $\Lattice_{h}$ such that $\|\tilde{\matT}_\ntru\| \leq  N\stdev$. Furthermore, the statistical distance between the distribution of $h$ and uniform over $\Rq^\times$ is at most $2^{10N}q^{-\lfloor \epsilon N \rfloor}$.
+			\end{lemma}
+			%
+%			\noindent The short basis can now be used for preimage sampling using the GPV framework \cite{DBLP:conf/stoc/GentryPV08}.
+			%
+%			\begin{lemma}[NTRU Preimage Sampling \cite{DBLP:conf/stoc/GentryPV08,DBLP:journals/iacr/StehleS13}]
+%				\label{lem:gaussian_sampler}
+%				Define $q,N,\stdev$ as in \Cref{lemma:NTRUTrapGen}, and $\sigma  \geq N^{3/2} \stdev \omega(\sqrt{\log N})$. Then, there is a PPT algorithm $\GaussianSampler$, that takes $(h,\NTRUbasis) \rand \NTRUTrapGen(q,N,\stdev)$, a target vector $c \in \Rq$ and a parameter $\sigma >0$  as input, and outputs a pair $(u,v)\in \Rq^{2}$ such that \begin{equation*}
+%\Delta\left(\begin{bmatrix} h &  1 \end{bmatrix}^{-1}_\sigma(c), \GaussianSampler(h,\NTRUbasis,c,\sigma)\right) \leq \negl \enspace.
+%\end{equation*}
+%			\end{lemma}
+
+
+\subsection{Commitment Scheme}
+We recall the notion of a commitment scheme with relaxed binding.
+\begin{definition}
+  Let $\commitmentScheme = (\setup, \commit, \open)$ be a triple of PPT algorithms. We say that $\commitmentScheme$ is a commitment scheme over $\commitmentSpace$ with slack space $\slackSpace$ if it has the following syntax:
+  \begin{itemize}[nolistsep]
+    \item $\setup(\secparam) \to \crs$ takes a security parameter $\secpar$ (specified in unary) and outputs a common reference string $\crs$.
+    \item $\commit(\crs, m) \to (C, \commitmentState)$ takes a common reference string $\crs$ a message $m \in \commitmentSpace$ and outputs a commitment $C$ and decommitment state $\commitmentState$.
+    \item $\open(\crs, C, m, \commitmentState, c)$ takes a common reference string $\crs$, a commitment $C$, a message $m \in \commitmentSpace$, a decommitment state $\commitmentState$ and a relaxation factor \footnote{We implicitly assume that if $c \not\in \slackSpace$ then $\open$ automatically returns $0$.} $c \in \slackSpace$ and outputs a bit indicating whether $C$ is a valid commitment to $m$ under $\crs$.
+  \end{itemize}
+\end{definition}
+\noindent We define the key properties of the commitment scheme: correctness, (relaxed) binding and hiding. In the following, we denote the message space as $\commitmentSpace$ and the slack space as $\slackSpace$. 
+\begin{definition}[Completeness] A commitment scheme $\commitmentScheme = (\setup, \commit, \open)$ satisfies completeness if there exists a global relaxation factor $c^* \in \slackSpace$ such that for every $m \in \commitmentSpace$:
+      \begin{equation*}
+        \Pr\left[
+          \open(\crs, C, m, \commitmentState, c^*) = 1
+          \middle|
+          \begin{array}{c}
+            \crs \from \setup(\secparam) \\
+            C, \commitmentState \from \commit(\crs, m) \\
+          \end{array}
+        \right] \geq 1 - \negl.
+      \end{equation*}
+\end{definition}
+\noindent For the notion of relaxed binding, we assume that the adversary comes up with two different openings with \textit{the same} relaxation factor.
+\begin{definition}[Relaxed Binding]
+     A commitment scheme $\commitmentScheme = (\setup, \commit, \open)$ satisfies relaxed binding if for every PPT adversary $\adversary{A}$:
+      \begin{equation*}
+      \scalemath{0.95}{
+        \Pr\left[
+          \begin{array}{c}
+            m \neq m' \land m,m' \in \commitmentSpace \land \\
+            \open(\crs, C, m, \polystate, c) = \open(\crs, C, m', \polystate', c) = 1
+          \end{array}
+        \middle|
+          \begin{array}{c}
+            \crs \from \setup(\secparam) \\
+            (C, (m, \polystate), (m, \polystate'), c) \from \adversary{A}(\crs) \\
+          \end{array}
+        \right] = \negl.}
+      \end{equation*}
+
+\end{definition}
+\begin{definition}[Hiding] A commitment scheme $\commitmentScheme = (\setup, \commit, \open)$ satisfies hiding if for every (stateful) PPT adversary $\adversary{A}$:
+      \begin{equation*}
+        \Pr\left[
+          b' = b
+          \middle|
+          \begin{array}{c}
+            \crs \from \setup(\secparam), (m_0,m_1) \from \Adversary(\crs) \\
+            b \from \{0,1\} \\
+            C, \commitmentState \from \commit(\crs, m_b) \\
+            b' \from \Adversary(C)
+          \end{array}
+        \right] \leq \frac{1}{2} + \negl.
+      \end{equation*}
+\end{definition}
+\subsubsection{BASIS Commitment Scheme}
+In this section we recall a compressing commitment scheme which stems from the vector commitment construction of Wee and Wu \cite{WeeWu23}. We inherit a crucial property from the aforementioned work that we support committing to arbitrarily large ring elements. Let $\ell$ be the length of the committed vectors over $\Rq$.  Finally, we define $t = n\q$ and $\matG \coloneqq  \matG_n \in \Rq^{n \times t}$. The commitment scheme is described in \Cref{fig:basis-commitment}.
+
+\begin{figure}
+    \centering
+    \begin{theo}[$\mathsf{BASIS}$ Commitment Scheme]
+    \underline{$\polysetup(1^\SecParam)$}
+    \begin{enumerate}[noitemsep]
+      \item Sample $(\matA, \matR) \from \trapgen(n, m)$.
+      \item Sample $\matW_1,\ldots,\matW_\ell \from \GL(n,\Rq)$
+      \item Let $\matR_i \coloneqq \matR \matG^{-1}(\matW_i^{-1} \matG)$ for $i \in [0,d]$.
+      \item Set \begin{equation*} 
+      \matB \coloneqq 
+      \left[\begin{array}{@{}ccc|c@{}}
+        \matW_1\matA &        & & -\matG \\ 
+        & \ddots & & \vdots \\ 
+        & & \matW_{\ell} \matA & -\matG
+      \end{array}\right], \quad 
+      \tilde{\matR} \coloneqq
+      \begin{bmatrix}
+        \matR_{1} & & \\
+        & \ddots & \\
+        & & \matR_{\ell} \\
+        \hline 
+        & \matzero &
+      \end{bmatrix}
+      \enspace.
+    \end{equation*}
+    \item Sample $\matT \from \samplepre(\matB, \tilde{\matR}, \matG_{n\ell}, \sigma_0)$.
+    \item Return $\crs \coloneqq (\matA, \matW_1,\ldots,\matW_\ell, \matT)$.
+    \end{enumerate}
+    \vspace{5mm}
+    $\underline{\polycommit(\crs, \vecf \in \Rq^{\ell})}$
+    \begin{enumerate}[noitemsep]
+    \item Parse $\vecf \coloneqq  (f_1,\ldots,f_d)$
+      \item Set $\matU \coloneqq \begin{bmatrix} -f_0 \matW_1 \matG \\ \vdots \\ -f_\ell \matW_\ell \matG \end{bmatrix}$
+      \item Sample $\begin{bmatrix} \matS_1 \\ \vdots \\ \matS_\ell \\ \hat{\matC} \end{bmatrix} \from \samplepre(\matB, \matU, \matT, \sigma_1)$.
+      \item Set $\matC \coloneqq \matG \hat{\matC}$.
+      \item Return $(\matC, \polystate \coloneqq (\matS_i)_{i \in [\ell]})$.
+    \end{enumerate}
+    \vspace{5mm}
+    $\underline{\polyopen(\crs, \matC, \vecf \in \Rq^{\ell}, \polystate)}$
+    \begin{enumerate}[noitemsep]
+    \item Parse $\vecf \coloneqq  (f_1,\ldots,f_\ell)$ .
+      \item Parse $\polystate \coloneqq (\matS_i)_{i \in [\ell]}$.
+      \item Return $1$ if and only if for all $i \in [\ell]$, 
+      \begin{itemize}
+          \item $\matA \matS_i + f_i \matG = \matW_i^{-1} \matC$.
+          \item $\|\matS_i\| \leq \gamma$.
+      \end{itemize}
+    \end{enumerate}
+    \end{theo}
+    \caption{$\mathsf{BASIS}$ commitment scheme for arbitrary messages in the message space $\commitmentSpace = \Rq^{\ell}$. Here, $\matG \in \Rq^{n \times n\q}$ is the gadget matrix of height $n$.}
+    \label{fig:basis-commitment}
+\end{figure}
+
+\section{Aggregation of Falcon Signatures}
+In this section we show how to publicly aggregate Falcon signatures using the $\mathsf{BASIS}$ commitment scheme. Namely, suppose we are given $\ell$ signatures $\{(u_i,v_i)\}_{i \in [\ell]} \in \Rq^2$ on distinct messages $m_1,\ldots,m_\ell$ corresponding to the verification keys $a_1,\ldots,a_\ell \in \Rq$ such that:
+\[ a_iu_i + v_i = H(m_i) \quad \text{and} \quad \|(u_i,v_i)\| \leq \beta \quad \text{for } i \in [\ell].\]
+Intuitively, we will provide a succinct proof of knowledge of $\{(u_i,v_i)\}_{i \in [k]} \in \Rq^2$ which satisfy the relation above.  Let $\crs = (\matA,\matW_1,\ldots,\matW_\ell,\matT)$ be the public parameters related to the $\mathsf{BASIS}$ commitment. Denote $\bar{\matA} := \sigma(\matA)$, and similarly for all the other matrices included in $\crs$. Then, define $\bar{\crs} := (\bar{\matA},\bar{\matW}_1,\ldots,\bar{\matW}_\ell,\bar{\matT})$.
+
+We first compute the following commitments:
+\begin{align*}
+& \left(\matC_a, (\matS_i)_{i \in [\ell]}\right) \from \commit(\crs,(a_1,\ldots,a_\ell)), \quad \left(\bar{\matC}_a, (\bar{\matS}_i)_{i \in [\ell]}\right) \from \commit(\bar{\crs},(a_1,\ldots,a_\ell)) \\
+& \left(\matC_u, (\matU_i)_{i \in [\ell]}\right) \from \commit(\crs,(u_1,\ldots,u_\ell)), \quad \left(\bar{\matC}_u, (\bar{\matU}_i)_{i \in [\ell]}\right) \from \commit(\bar{\crs},(u_1,\ldots,u_\ell))\\
+& \left(\matC_v, (\matV_i)_{i \in [\ell]}\right) \from \commit(\crs,(v_1,\ldots,v_\ell)), \quad \left(\bar{\matC}_v, (\bar{\matV}_i)_{i \in [\ell]}\right) \from \commit(\bar{\crs},(v_1,\ldots,v_\ell)).
+\end{align*}
+By construction of the $\mathsf{BASIS}$ commitment scheme, we have for $i \in [\ell]$:
+\begin{align*}
+& \matA\matS_i + a_i\matG = \matW_i^{-1} \matC_a,  \quad  \matA\matU_i + u_i\matG = \matW_i^{-1} \matC_u \quad \text{and} \quad \matA\matV_i + v_i\matG = \matW_i^{-1} \matC_v.   
+\end{align*}
+In particular,
+\[ \matW_i^{-1}\left(\matC_u\matG^{-1}(\matW_i^{-1}\matC_a) + \matC_v\right) = \matA\left(\matU_i\matG^{-1}(\matW_i^{-1}\matC_a) + u_i\matS_i + \matV_i \right) + (a_iu_i + v_i)\matG.\]
+Now, we call the random oracle $\ro$ to obtain challenges:
+\begin{equation}\label{eq:fiat-shamir} (\alpha_1,\ldots,\alpha_\ell) := \ro(\crs, (a_1,\ldots,a_\ell), (m_1,\ldots,m_\ell), (\matC_a,\bar{\matC}_a,\matC_u,\bar{\matC}_u,\matC_v,\bar{\matC}_v))).\end{equation}
+We then aggregate the commitment openings as follows:
+\begin{align*}
+& \matZ := \sum^\ell_{i=1} \alpha_i\matS_i, \quad   \matX := \sum^\ell_{i=1} \alpha_i\matU_i, \quad \matY := \sum^\ell_{i=1} \alpha_i\matV_i, \quad \matR := \sum^\ell_{i=1} \alpha_i\left(\matU_i\matG^{-1}(\matW_i^{-1}\matC_a) + u_i\matS_i + \matV_i \right) \\
+& \bar{\matZ} := \sum^\ell_{i=1} \alpha_i\bar{\matS}_i, \quad   \bar{\matX} := \sum^\ell_{i=1} \alpha_i\bar{\matU}_i, \quad \bar{\matY} := \sum^\ell_{i=1} \alpha_i\bar{\matV}_i, \quad \bar{\matR} := \sum^\ell_{i=1} \alpha_i\left(\bar{\matU}_i\matG^{-1}(\matW_i^{-1}\bar{\matC}_a) + u_i\bar{\matS}_i + \bar{\matV}_i \right).
+\end{align*}
+Further,
+\[ x := \sum^\ell_{i=1} \alpha_iu_i, \quad y := \sum^\ell_{i=1} \alpha_iv_i.\]
+The aggregated signature is
+$\mathsf{s} := ((\matC_a,\bar{\matC}_a,\matC_u,\bar{\matC}_u,\matC_v,\bar{\matC}_v),(\matX,\bar{\matX},\matY,\bar{\matY},\matZ,\bar{\matZ},\matR,\bar{\matR}),(x,y))$.
+
+The aggregation verifier is given  public parameters $\crs$, verification keys $a_1,\ldots,a_\ell$, messages $m_1,\ldots,m_\ell$ and the aggregated signature $\mathsf{s}$. It first recomputes the challenges $(\alpha_1,\ldots,\alpha_\ell)$ as in \eqref{eq:fiat-shamir}. Then, it accepts if all the following conditions hold:
+\begin{align*} & \matA\matZ + \left(\sum^\ell_{i=1} \alpha_i a_i\right) \matG = \left(\sum^{\ell}_{i=1} \alpha_i\matW^{-1}_i\right) \matC_a, \quad \bar{\matA}\bar{\matZ} + \left(\sum^\ell_{i=1} \alpha_i a_i\right) \matG = \left(\sum^{\ell}_{i=1} \alpha_i\matW^{-1}_i\right) \bar{\matC}_a, \\
+& \matA\matX + x \matG = \left(\sum^{\ell}_{i=1} \alpha_i\matW^{-1}_i\right) \matC_u, \quad \bar{\matA}\bar{\matX} + x \matG = \left(\sum^{\ell}_{i=1} \alpha_i\bar{\matW}^{-1}_i\right) \bar{\matC}_u, \\
+&  \matA\matY + y \matG = \left(\sum^{\ell}_{i=1} \alpha_i\matW^{-1}_i\right) \matC_v,  \quad \bar{\matA}\bar{\matY} + y \matG = \left(\sum^{\ell}_{i=1} \alpha_i\bar{\matW}^{-1}_i\right) \bar{\matC}_v, \\
+& \matA \matR +  \left(\sum^\ell_{i=1} \alpha_i H(m_i) \right) \matG = \sum^\ell_{i=1}\alpha_i\matW_i^{-1}\left(\matC_u\matG^{-1}(\matW_i^{-1}\matC_a) + \matC_v\right), \\
+& \bar{\matA} \bar{\matR} +  \left(\sum^\ell_{i=1} \alpha_i H(m_i) \right) \matG = \sum^\ell_{i=1}\alpha_i\bar{\matW}_i^{-1}\left(\bar{\matC}_u\matG^{-1}(\bar{\matW}_i^{-1}\bar{\matC}_a) + \bar{\matC}_v\right), \\
+& \|\matZ\|, \| \bar{\matZ}\| \leq \beta_Z, \|\matX\|,\| \bar{\matX}\| \leq \beta_X, \|\matY\|,\| \bar{\matY}\| \leq \beta_Y, \|\matR\|,\| \bar{\matR}\| \leq \beta_R, \\
+& \|(x,y)\| \leq \beta_{xy}.
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\doclearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+%\iffull
+\section*{Acknowledgments}\label{sec:acknowledgements}
+Placeholder
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\fi
+%\iffull
+\printbibliography
+%\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
